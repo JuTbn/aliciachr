@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum Category {
+  CARTE
+  ILLUSTRATION_COULEUR
+  ILLUSTRATION_NB
+  LIVRE_COLORIAGE
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  slug        String      @unique
+  name        String
+  description String?
+  category    Category
+  priceCents  Int
+  imageUrl    String
+  stock       Int?
+  isLimited   Boolean     @default(false)
+  size        String?
+  pageCount   Int?
+  theme       String?
+  createdAt   DateTime    @default(now())
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  stripeSessionId String      @unique
+  email           String
+  totalCents      Int
+  status          String      @default("PENDING")
+  createdAt       DateTime    @default(now())
+  items           OrderItem[]
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  order      Order   @relation(fields: [orderId], references: [id])
+  orderId    Int
+  product    Product @relation(fields: [productId], references: [id])
+  productId  Int
+  quantity   Int
+  priceCents Int
+}
