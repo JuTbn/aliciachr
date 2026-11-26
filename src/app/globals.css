@@ -4,12 +4,13 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+@theme {
+  --font-serif: var(--font-cormorant), Georgia, serif;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: #fafaf8;   /* fond de page */
+  --color-ink: #111111;     /* texte */
+  --color-shelf: #d9d9d9;   /* étagère grise sous les produits */
+  --color-stone: #757575;   /* bouton actif, texte secondaire */
 }
 
 @media (prefers-color-scheme: dark) {
